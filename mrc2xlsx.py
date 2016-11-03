@@ -1,5 +1,4 @@
-# import openpyxl as opx
-from openpyxl import workbook
+import openpyxl as opx
 from openpyxl.styles import Font, colors, Alignment
 import sys
 
@@ -8,12 +7,12 @@ HEADER = ["Kat.", "Ind.", "SF", "Feldinhalt"]
 
 
 # Namen der Input- und Output-Dateien
-#if len(argv) < 2:
-#    in_file_name = input("Bitte geben Sie den Dateinamen der Quelldatei ein: \n")
-#else:
-#    in_file_name = argv[1]
+if len(argv) < 2:
+    in_file_name = input("Bitte geben Sie den Dateinamen der Quelldatei ein: \n")
+else:
+    in_file_name = argv[1]
 
-in_file_name = "TEST.MRC"
+# in_file_name = "TEST.MRC"
 
 out_file_name = in_file_name[:-4] + ".xlsx"
 
