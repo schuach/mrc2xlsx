@@ -1,16 +1,19 @@
-import openpyxl as opx
-from openpyxl.styles import Font, Color, colors, Alignment
-from sys import argv
+# import openpyxl as opx
+from openpyxl import workbook
+from openpyxl.styles import Font, colors, Alignment
+import sys
 
 SUBFIELD_PREFIX = "$$"
 HEADER = ["Kat.", "Ind.", "SF", "Feldinhalt"]
 
 
 # Namen der Input- und Output-Dateien
-if len(argv) < 2:
-    in_file_name = input("Bitte geben Sie den Dateinamen der Quelldatei ein: \n")
-else:
-    in_file_name = argv[1]
+#if len(argv) < 2:
+#    in_file_name = input("Bitte geben Sie den Dateinamen der Quelldatei ein: \n")
+#else:
+#    in_file_name = argv[1]
+
+in_file_name = "TEST.MRC"
 
 out_file_name = in_file_name[:-4] + ".xlsx"
 
@@ -26,7 +29,7 @@ subfield = ws.column_dimensions['C']
 sf_data = ws.column_dimensions['D']
 head_row = ws.row_dimensions[1]
 
-# styles für xlsx-output
+# styles für xlsx-output h
 head_row.font = Font(name='Calibri',
                     size=11,
                     bold=True,
@@ -43,8 +46,7 @@ kat_nr.font = Font(name='Courier New',
                     underline='single',
                     strike=False,
                     color=colors.BLUE)
-kat_nr.alignment = Alignment(vertical='top',
-                             shrink_to_fit=True)
+kat_nr.alignment = Alignment(vertical='top')
 
 ind.font = Font(name='Courier New',
                     size=11,
@@ -54,8 +56,7 @@ ind.font = Font(name='Courier New',
                     underline='single',
                     strike=False,
                     color=colors.BLUE)
-ind.alignment = Alignment(vertical='top',
-                          shrink_to_fit=True)
+ind.alignment = Alignment(vertical='top')
 
 subfield.font = Font(name='Courier New',
                     size=11,
@@ -124,11 +125,16 @@ for i in range(len(mrc_in) - 1):
 
 
 def merge_empty(ws):
-    for cell in ws['A']:
+    for row in range(ws.max_row):
+        cell = ws.cell(row=row + 1, column=1)
         if cell.value == None:
             ws.merge_cells(start_row=cell.row - 1, start_column=1,end_row=cell.row,end_column=2)
             print(cell.row)
 
+            
 merge_empty(ws)
 
+print(ws["A1"])
 wb.save(out_file_name)
+
+
